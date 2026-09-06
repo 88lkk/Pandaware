@@ -38,6 +38,8 @@ function Library:Window(WindowName)
 		BackgroundColor3 = Color3.new(0, 0, 0),
 		Size = UDim2.new(0.6, 0, 0.25, 0),
 		BackgroundTransparency = 0.25,
+		Active = true,
+		Draggable = true
 	})
 	Center(Frame)
 	Ratio(Frame, 0.8)
