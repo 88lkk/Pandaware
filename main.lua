@@ -11,13 +11,15 @@ local Util = loadstring(game:HttpGet("https://raw.githubusercontent.com/88lkk/Ut
 local Header = Style({
 	TextScaled = true,
 	TextColor3 = Color3.new(1, 1, 1),
-	Font = Enum.Font.MontserratBold
+	Font = Enum.Font.MontserratBold,
+	TextStrokeTransparency = 0
 })
 
 local Normal = Style({
 	TextScaled = true,
 	TextColor3 = Color3.new(1, 1, 1),
-	Font = Enum.Font.Montserrat
+	Font = Enum.Font.Montserrat,
+	TextStrokeTransparency = 0
 })
 
 SetDefaultProperty("Frame", "BorderSizePixel", 0)
@@ -117,12 +119,12 @@ function Library:Window(WindowName)
 			Text = "",
 			Position = UDim2.new(0.725, 0, 0, 0),
 			Size = UDim2.new(0.25, 0, 1, 0),
-			BorderSizePixel = 0,
 			BackgroundColor3 = Color3.new(0.5, 0.5, 0.5)
 		})
 		CenterY(ToggleButton)
 		Ratio(ToggleButton)
 		Round(ToggleButton, 1)
+		Stroke(ToggleButton):Apply("Border"):Line("Round")
 
 		local Toggled = false
 		ToggleButton.Activated:Connect(function()
@@ -164,6 +166,7 @@ function Library:Window(WindowName)
 			BackgroundTransparency = 1
 		})
 		Normal:Apply(DropdownTitle)
+		Pad(DropdownTitle):A(0.2):L(0.025):R(0.025)
 		
 		local DropdownButton = _("TextButton", {
 			Parent = DropdownFrame,
@@ -171,11 +174,23 @@ function Library:Window(WindowName)
 			Position = UDim2.new(0.5, 0, 0, 0),
 			BackgroundTransparency = 0.85,
 			BackgroundColor3 = Color3.new(1, 1, 1),
-			TextXAlignment = Enum.TextXAlignment.Left,
 			Text = SelectedOption
 		})
 		Pad(DropdownButton):A(0.2):L(0.025):R(0.025)
 		Normal:Apply(DropdownButton)
+
+		local DropdownArrow = _("TextLabel", {
+			Parent = DropdownButton,
+			Text = "▼",
+			Size = UDim2.new(0.3, 0, 1, 0),
+			Position = UDim2.new(1, 0, 0, 0),
+			AnchorPoint = Vector2.new(1, 0),
+			TextXAlignment = Enum.TextXAlignment.Right,
+			TextTransparency = 0.5,
+			BackgroundTransparency = 1,
+			ZIndex = 2
+		})
+		Normal:Apply(DropdownArrow)
 
 		local Dropped = false
 		local Archive = {}
@@ -185,6 +200,7 @@ function Library:Window(WindowName)
 				Inst:Destroy()
 			end
 			Dropped = false
+			DropdownArrow.Text = "▼"
 		end
 
 		DropdownButton.Activated:Connect(function()
@@ -193,6 +209,7 @@ function Library:Window(WindowName)
 				return
 			end
 			Dropped = true
+			DropdownArrow.Text = "▲"
 
 			Archive = {}
 			local Num = 0
@@ -206,6 +223,10 @@ function Library:Window(WindowName)
 				Clone.Text = Option
 				Clone.Size = UDim2.new(0.5, 0, 1, 0)
 				Clone.Position = UDim2.new(0.5, 0, Num, 0)
+
+				local CloneArrow = Clone:FindFirstChild("TextLabel")
+				if CloneArrow then CloneArrow:Destroy() end
+
 				table.insert(Archive, Clone)
 
 				Clone.Activated:Connect(function()
@@ -213,6 +234,91 @@ function Library:Window(WindowName)
 					SelectedOption = Option
 					DropdownButton.Text = Option
 				end)
+			end
+		end)
+	end
+
+	function WindowTree:Slider(SliderName, Min, Max, Default, Callback)
+		local SliderFrame = _("Frame", {
+			Parent = Modules,
+			Size = UDim2.new(1, 0, 0.1, 0),
+			BackgroundTransparency = 1
+		})
+
+		local SliderLayout = _("UIListLayout", {
+			Parent = SliderFrame,
+			FillDirection = Enum.FillDirection.Horizontal,
+			SortOrder = Enum.SortOrder.LayoutOrder,
+			HorizontalFlex = Enum.UIFlexAlignment.SpaceBetween
+		})
+
+		local SliderTitle = _("TextLabel", {
+			Parent = SliderFrame,
+			Text = SliderName,
+			Size = UDim2.new(0.5, 0, 1, 0),
+			TextXAlignment = Enum.TextXAlignment.Left,
+			BackgroundTransparency = 1
+		})
+		Normal:Apply(SliderTitle)
+		Pad(SliderTitle):A(0.2):L(0.025):R(0.025)
+
+		local SliderBack = _("Frame", {
+			Parent = SliderFrame,
+			Size = UDim2.new(0.5, 0, 1, 0),
+			BackgroundTransparency = 0.85,
+			BackgroundColor3 = Color3.new(1, 1, 1)
+		})
+
+		local Fraction = (Default - Min) / (Max - Min)
+
+		local SliderFill = _("Frame", {
+			Parent = SliderBack,
+			Size = UDim2.new(Fraction, 0, 1, 0),
+			BackgroundColor3 = Color3.new(1, 1, 1)
+		})
+
+		local SliderValue = _("TextLabel", {
+			Parent = SliderBack,
+			Text = tostring(Default),
+			Size = UDim2.new(1, 0, 1, 0),
+			TextXAlignment = Enum.TextXAlignment.Center,
+			BackgroundTransparency = 1,
+			ZIndex = 2
+		})
+		Normal:Apply(SliderValue)
+		Pad(SliderValue):A(0.2):L(0.025):R(0.025)
+
+		local SliderButton = _("TextButton", {
+			Parent = SliderBack,
+			Text = "",
+			Size = UDim2.new(1, 0, 1, 0),
+			BackgroundTransparency = 1,
+			ZIndex = 3
+		})
+
+		local Dragging = false
+
+		SliderButton.InputBegan:Connect(function(Input)
+			if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
+				Dragging = true
+			end
+		end)
+
+		UserInputService.InputEnded:Connect(function(Input)
+			if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
+				Dragging = false
+			end
+		end)
+
+		UserInputService.InputChanged:Connect(function(Input)
+			if Dragging and (Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch) then
+				local RelativeX = math.clamp((Input.Position.X - SliderBack.AbsolutePosition.X) / SliderBack.AbsoluteSize.X, 0, 1)
+				local Value = math.floor(Min + (RelativeX * (Max - Min)))
+
+				SliderFill.Size = UDim2.new(RelativeX, 0, 1, 0)
+				SliderValue.Text = tostring(Value)
+
+				Callback(Value)
 			end
 		end)
 	end
