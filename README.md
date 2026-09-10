@@ -1,4 +1,4 @@
-# Pandware
+# Pandaware
 
 A sleek and comprehensive UI library for Roblox.
 
@@ -8,4 +8,4 @@ A sleek and comprehensive UI library for Roblox.
 * Open source
 * Many modules
 
-<img width="321" height="362" alt="Pandware Preview" src="https://github.com/user-attachments/assets/9322f084-4286-4335-80d9-793841f7728c" />
+<img width="321" height="362" alt="Pandaware Preview" src="https://github.com/user-attachments/assets/9322f084-4286-4335-80d9-793841f7728c" />
