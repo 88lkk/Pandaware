@@ -23,6 +23,7 @@ local Normal = Style({
 })
 
 SetDefaultProperty("Frame", "BorderSizePixel", 0)
+SetDefaultProperty("TextButton", "BorderSizePixel", 0)
 
 ---------------------------
 -- Library
@@ -329,4 +330,8 @@ function Library:Window(WindowName)
 	return WindowTree
 end
 
-return Library
+local Window = Library:Window()
+Window:Toggle("toggle test", print)
+Window:Button("button test", print)
+Window:Dropdown("dropdown test", {1, 2, 3}, print)
+Window:Slider("slider test", 0, 10, 5, print)
