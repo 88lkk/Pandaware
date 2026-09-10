@@ -223,6 +223,9 @@ function Library:Window(WindowName)
 				Clone.Text = Option
 				Clone.Size = UDim2.new(0.5, 0, 1, 0)
 				Clone.Position = UDim2.new(0.5, 0, Num, 0)
+				Clone.BackgroundTransparency = 0
+				Clone.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3)
+				Clone.ZIndex = 999
 
 				local CloneArrow = Clone:FindFirstChild("TextLabel")
 				if CloneArrow then CloneArrow:Destroy() end
