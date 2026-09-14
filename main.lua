@@ -49,7 +49,7 @@ function Library:Window(WindowName)
 	local Title = _("TextLabel", {
 		Parent = Frame,
 		Size = UDim2.new(1, 0, 0.07, 0),
-		Text = WindowName or "pandware",
+		Text = WindowName or "pandaware",
 		TextXAlignment = Enum.TextXAlignment.Left,
 		BackgroundTransparency = 1
 	})
