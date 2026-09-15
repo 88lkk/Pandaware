@@ -130,7 +130,7 @@ function Library:Window(WindowName)
 		local Toggled = false
 		ToggleButton.Activated:Connect(function()
 			Toggled = not Toggled
-			Callback(Toggled)
+			task.spawn(Callback, Toggled)
 
 			ToggleButton.BackgroundColor3 = Toggled and Color3.new(0, 1, 0) or Color3.new(0.5, 0.5, 0.5)
 		end)
@@ -322,7 +322,7 @@ function Library:Window(WindowName)
 				SliderFill.Size = UDim2.new(RelativeX, 0, 1, 0)
 				SliderValue.Text = tostring(Value)
 
-				Callback(Value)
+				task.spawn(Callback, Value)
 			end
 		end)
 	end
