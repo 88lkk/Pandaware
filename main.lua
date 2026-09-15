@@ -12,14 +12,14 @@ local Header = Style({
 	TextScaled = true,
 	TextColor3 = Color3.new(1, 1, 1),
 	Font = Enum.Font.MontserratBold,
-	TextStrokeTransparency = 0
+	TextStrokeTransparency = 0.5
 })
 
 local Normal = Style({
 	TextScaled = true,
 	TextColor3 = Color3.new(1, 1, 1),
 	Font = Enum.Font.Montserrat,
-	TextStrokeTransparency = 0
+	TextStrokeTransparency = 0.5
 })
 
 SetDefaultProperty("Frame", "BorderSizePixel", 0)
@@ -125,7 +125,7 @@ function Library:Window(WindowName)
 		CenterY(ToggleButton)
 		Ratio(ToggleButton)
 		Round(ToggleButton, 1)
-		Stroke(ToggleButton):Apply("Border"):Line("Round")
+		Stroke(ToggleButton):Apply("Border"):Line("Round"):Trans(0.5)
 
 		local Toggled = false
 		ToggleButton.Activated:Connect(function()
