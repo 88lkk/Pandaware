@@ -2,7 +2,9 @@
 -- 88lkk Util
 ---------------------------
 
-local Util = loadstring(game:HttpGet("https://raw.githubusercontent.com/88lkk/Util/refs/heads/main/main.lua"))()
+if not getfenv()["88lkkUtil"] then
+	local Util = loadstring(game:HttpGet("https://raw.githubusercontent.com/88lkk/Util/refs/heads/main/main.lua"))()
+end
 
 ---------------------------
 -- Setup
