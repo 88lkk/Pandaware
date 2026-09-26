@@ -332,4 +332,6 @@ function Library:Window(WindowName)
 	return WindowTree
 end
 
+Library.Util = Util
+
 return Library
