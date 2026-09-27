@@ -3,7 +3,7 @@
 ---------------------------
 
 if not getfenv()["88lkkUtil"] then
-	local Util = loadstring(game:HttpGet("https://raw.githubusercontent.com/88lkk/Util/refs/heads/main/main.lua"))()
+	local Util = loadstring(game:HttpGet("https://raw.githubusercontent.com/88lkk/Util/refs/heads/main/Main.lua"))()
 end
 
 ---------------------------
